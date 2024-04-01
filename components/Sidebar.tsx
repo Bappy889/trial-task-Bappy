@@ -23,10 +23,9 @@ export default function Sidebar() {
   const handleLogout = async () => {
     try {
       console.log("logging out");
-      await signOut({ redirect: false, callbackUrl: "/" });
+      await signOut({ redirect: false });
       console.log("Logout successful");
       router.push("/");
-      window.location.reload();
     } catch (error) {
       console.error("Error signing out:", error);
     }
