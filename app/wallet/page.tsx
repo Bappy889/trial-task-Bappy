@@ -26,8 +26,8 @@ import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 
 export default function Wallet() {
-  const { data: session, update } = useSession();
-
+  const { data: session } = useSession();
+  if (!session) redirect("/");
   if (session && session?.walletAddress) redirect("/dashboard");
 
   return (
