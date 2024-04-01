@@ -4,7 +4,11 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { useRef } from "react";
 
-export function Tabs() {
+interface handleTabProp {
+  handleTab: (type: string) => void; // Function that accepts a string parameter
+}
+
+export function Tabs({ handleTab }: handleTabProp) {
   const elementsRef = useRef<HTMLButtonElement[]>([]);
   const router = useRouter(); // Initialize useRouter hook
   const tabClick = (
@@ -20,11 +24,12 @@ export function Tabs() {
     });
     // e.target.classList.add("tab_active");
     (e.target as HTMLButtonElement).classList.add("text-red-500");
-    router.push(`/dashboard/${route}`);
+    // router.push(`/dashboard/${route}`);
+    handleTab(route);
   };
   return (
-    <div className="w-auto pt-5 border-b">
-      <div className="w-auto">
+    <div className="w-auto pt-5 border-b z-10 pb-5">
+      <div className="w-auto bg-red-50">
         <div className="">
           <button
             className="tablinks p-5 text-lg text-red-500"

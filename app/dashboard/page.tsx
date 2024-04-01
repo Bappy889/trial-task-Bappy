@@ -1,7 +1,10 @@
 import DashboardData from "@/components/DashboardData";
-export default function Dashboard() {
-  const propsToPass = {
-    name: "uniswap", // Replace "value" with the actual value you want to pass
-  };
-  return <DashboardData {...propsToPass} />;
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+
+export default async function Dashboard() {
+  const session = await getServerSession();
+
+  if (!session) redirect("/");
+  return <DashboardData />;
 }

@@ -9,10 +9,7 @@ export default function DashboardLayout({
     <section className="flex items-start justify-between">
       {/* Include shared UI here e.g. a header or sidebar */}
       <Sidebar />
-      <div className="flex-1 px-4">
-        <Tabs />
-        {children}
-      </div>
+      <div className="flex-1 px-4 ml-[300px] overflow-y-auto">{children}</div>
     </section>
   );
 }

@@ -12,7 +12,6 @@ export async function POST(req) {
 
     if (error) throw error;
 
-    console.log("user: ", data);
     return NextResponse.json({ data });
   } catch (error) {
     console.log(error);

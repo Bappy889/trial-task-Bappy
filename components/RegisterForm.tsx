@@ -22,6 +22,11 @@ export default function RegisterForm() {
     }
 
     try {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailRegex.test(email)) {
+        setError("Invalid email");
+      }
       const resUserExists = await fetch("api/userExists", {
         method: "POST",
         headers: {
@@ -32,7 +37,9 @@ export default function RegisterForm() {
 
       const { data } = await resUserExists.json();
 
-      if (data) {
+      console.log(data);
+
+      if (data.length != 0) {
         setError("User already exists.");
         return;
       }
@@ -50,7 +57,7 @@ export default function RegisterForm() {
       });
 
       if (res.ok) {
-        router.push("/wallet");
+        router.push("/");
       } else {
         console.log("User registration failed.");
       }

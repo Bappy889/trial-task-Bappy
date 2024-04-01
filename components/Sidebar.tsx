@@ -10,6 +10,7 @@ import {
   LayoutDashboard,
   LogOut,
   Settings,
+  UserRoundCheck,
   Wallet,
 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
@@ -25,30 +26,31 @@ export default function Sidebar() {
       await signOut({ redirect: false, callbackUrl: "/" });
       console.log("Logout successful");
       router.push("/");
+      window.location.reload();
     } catch (error) {
       console.error("Error signing out:", error);
     }
   };
   return (
-    <div className="w-[300px] min-h-screen border-r flex py-5 px-5 ">
+    <div className="w-[300px] min-h-screen border-r fixed flex py-5 px-5 top-0 left-0 overflow-y-auto">
       <div className=" flex flex-col w-full">
         {/* image with wallet */}
         <div className="flex flex-col items-center gap-5 pb-5 h-1/6">
           <div>
-            <Image
+            {/* <Image
               src="https://i.pravatar.cc/300"
               width={37}
               height={37}
               className="rounded-full"
               alt="profile"
-            />
+            /> */}
+            <UserRoundCheck />
           </div>
 
           <Button
             className="relative w-full flex items-center justify-start p-5 gap-4"
             variant="outline"
             size="icon"
-            onClick={() => console.log({ address: session })}
           >
             <Wallet />
             {session ? (

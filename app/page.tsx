@@ -7,7 +7,9 @@ const App = async () => {
   const session = await getServerSession();
   console.log("sess is");
   console.log(session);
-  if (session) redirect("/wallet");
+  // if (session) redirect("/wallet");
+  if (session && session?.walletAddress) redirect("/dashboard");
+
   return (
     <main>
       <LoginForm />

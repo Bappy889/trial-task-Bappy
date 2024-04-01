@@ -14,6 +14,9 @@ export default function WalletConnect() {
 
   const connectWallet = async () => {
     try {
+      if (!window.ethereum) {
+        throw new Error("Wallet not found in the browser");
+      }
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
       const balance = await provider.getBalance(signer.address);
@@ -24,20 +27,20 @@ export default function WalletConnect() {
           walletAddress: signer.address,
         },
       });
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      alert(error.message);
     }
   };
   return (
     <div>
       <Button
-        className="relative w-full flex items-center justify-start p-5 gap-4 bg-red-500 text-white"
+        className="relative w-full flex items-center justify-center p-5 gap-4 bg-red-500 text-white"
         variant="outline"
         size="icon"
         onClick={connectWallet}
       >
         <Wallet />
-        Connect Wallet
+        Connect
       </Button>
     </div>
   );

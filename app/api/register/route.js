@@ -7,6 +7,11 @@ export async function POST(req) {
   try {
     const { name, email, password } = await req.json();
     console.log("register called");
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      throw new Error("Invalid email");
+    }
     const supabase = createClient();
 
     const hashedPassword = await bcrypt.hash(password, 10);

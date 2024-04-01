@@ -10,9 +10,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Paginations } from "./Paginations";
 import { useEffect, useState } from "react";
 import { Filter } from "./Filter";
+import { Tabs } from "./Tabs";
 
 // const invoices = [
 //   {
@@ -147,20 +147,21 @@ import { Filter } from "./Filter";
 //   },
 // ];
 
-export function TableList(props: any) {
-  const { name } = props;
+export function TableList() {
   useEffect(() => {
     uniswapData();
   }, []);
 
   const [invoices, setInvoice] = useState([]);
+  const [pancake, setPancake] = useState([]);
+  const [uniswap, setUniswap] = useState([]);
 
   const roundOff = (value: any) => {
     return Math.round(value * 100) / 100;
   };
 
   const uniswapData = async (chain = "ethereum") => {
-    const resUserExists = await fetch(`/api/${name}`, {
+    const resUserExists = await fetch(`/api/swap`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -168,31 +169,38 @@ export function TableList(props: any) {
       body: JSON.stringify({ chain }),
     });
 
-    const { data } = await resUserExists.json();
-    setInvoice(data.data.pools);
-    // console.log(data.data.pools);
+    const { uniswapData, pancakeData } = await resUserExists.json();
+    setUniswap(uniswapData);
+    setPancake(pancakeData);
+    setInvoice(uniswapData.concat(pancakeData));
+  };
+
+  const handleTab = (type: string) => {
+    if (type == "all") {
+      setInvoice(uniswap.concat(pancake));
+    } else if (type == "uniswap") {
+      setInvoice(uniswap);
+    } else {
+      setInvoice(pancake);
+    }
   };
 
   return (
     <div>
-      <div className="flex justify-end py-2">
+      <Tabs handleTab={handleTab} />
+      {/* <div className="flex justify-end py-2">
         <Filter />
-      </div>
+      </div> */}
       <Table>
         {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
         <TableHeader>
           <TableRow className="bg-gray-100 ">
             <TableHead className="w-[100px] font-bold">Token</TableHead>
-            <TableHead className="font-bold">Price</TableHead>
+            <TableHead className="font-bold">Token1 Amt.</TableHead>
+            <TableHead className="font-bold">Token2 Amt.</TableHead>
             <TableHead className="font-bold">txns</TableHead>
             <TableHead className="font-bold">Volume</TableHead>
-            <TableHead className="font-bold">makers</TableHead>
-            <TableHead className="text-right font-bold">5M</TableHead>
-            <TableHead className="text-right font-bold">1H</TableHead>
-            <TableHead className="text-right font-bold">6H</TableHead>
-            <TableHead className="text-right font-bold">24H</TableHead>
-            <TableHead className="text-right font-bold">Liquidity</TableHead>
-            <TableHead className="text-right font-bold">FDV</TableHead>
+            <TableHead className="font-bold">Liquidity</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -201,32 +209,14 @@ export function TableList(props: any) {
               <TableCell>
                 {invoice?.token0.symbol} / {invoice?.token1.symbol}
               </TableCell>
-              <TableCell>{roundOff(invoice.token0Price)}</TableCell>
+              <TableCell>{roundOff(invoice.volumeToken0)}</TableCell>
+              <TableCell>{roundOff(invoice.volumeToken1)}</TableCell>
               <TableCell>{invoice.txCount}</TableCell>
               <TableCell>{roundOff(invoice.volumeUSD)}</TableCell>
-              <TableCell>{invoice.maker}</TableCell>
-              <TableCell className="text-right">
-                {invoice.hourdata[0].tick}
-              </TableCell>
-              <TableCell className="text-right">{invoice["1Hour"]}</TableCell>
-              <TableCell className="text-right">{invoice["6Hour"]}</TableCell>
-              <TableCell className="text-right">{invoice["24Hour"]}</TableCell>
-              <TableCell className="text-right">
-                {roundOff(invoice.liquidity)}
-              </TableCell>
-              <TableCell className="text-right">{invoice.FDV}</TableCell>
+              <TableCell>{invoice.liquidity}</TableCell>
             </TableRow>
           ))}
         </TableBody>
-        {/* <TableFooter>
-        <TableRow>
-          <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">$2,500.00</TableCell>
-        </TableRow>
-        <TableRow>
-          <Paginations />
-        </TableRow>
-      </TableFooter> */}
       </Table>
     </div>
   );
