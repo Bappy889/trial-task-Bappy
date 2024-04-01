@@ -5,7 +5,7 @@ import { createClient } from "@/utils/supabase/server";
 
 export async function POST(req) {
   try {
-    const { name, email, password } = await req.json();
+    const { email, password } = await req.json();
     console.log("register called");
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

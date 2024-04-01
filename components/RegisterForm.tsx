@@ -15,8 +15,8 @@ export default function RegisterForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(name, email, password);
-    if (!name || !email || !password) {
+    console.log(email, password);
+    if (!email || !password) {
       setError("All fields are necessary.");
       return;
     }
@@ -50,13 +50,13 @@ export default function RegisterForm() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name,
           email,
           password,
         }),
       });
-
       if (res.ok) {
+        window.alert("Registration successfull!");
+
         router.push("/");
       } else {
         console.log("User registration failed.");
@@ -72,11 +72,6 @@ export default function RegisterForm() {
         <h1 className="text-xl font-bold my-4">Register</h1>
         {/* //onSubmit={signup} */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-          <input
-            onChange={(e) => setName(e.target.value)}
-            type="text"
-            placeholder="Full Name"
-          />
           <input
             onChange={(e) => setEmail(e.target.value)}
             type="text"
