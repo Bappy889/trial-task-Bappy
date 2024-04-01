@@ -204,8 +204,8 @@ export function TableList() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {invoices.map((invoice) => (
-            <TableRow key={invoice}>
+          {invoices.map((invoice, index) => (
+            <TableRow key={index}>
               <TableCell>
                 {invoice?.token0.symbol} / {invoice?.token1.symbol}
               </TableCell>
