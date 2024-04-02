@@ -25,6 +25,7 @@ export function Tabs({ handleTab }: handleTabProp) {
     // e.target.classList.add("tab_active");
     (e.target as HTMLButtonElement).classList.add("text-red-500");
     // router.push(`/dashboard/${route}`);
+    console.log(route);
     handleTab(route);
   };
   return (
@@ -35,7 +36,7 @@ export function Tabs({ handleTab }: handleTabProp) {
             className="tablinks p-5 text-lg text-red-500"
             id="created"
             onClick={(e) => {
-              tabClick(e, "");
+              tabClick(e, "all");
             }}
           >
             All

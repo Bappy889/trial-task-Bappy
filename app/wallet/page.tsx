@@ -31,7 +31,7 @@ export default function Wallet() {
   if (session && session?.walletAddress) redirect("/dashboard");
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100">
+    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-purple-400 to-blue-500">
       <div className="max-w-md w-full p-6 bg-white shadow-md rounded-lg">
         <h1 className="text-lg font-semibold mb-4 text-center">
           Please connect your metamask wallet

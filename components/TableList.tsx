@@ -176,8 +176,10 @@ export function TableList() {
   };
 
   const handleTab = (type: string) => {
+    console.log("type is");
+    console.log(type);
     if (type == "all") {
-      setInvoice(uniswap.concat(pancake));
+      setInvoice(pancake.concat(uniswap));
     } else if (type == "uniswap") {
       setInvoice(uniswap);
     } else {

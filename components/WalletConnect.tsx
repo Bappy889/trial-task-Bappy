@@ -34,7 +34,7 @@ export default function WalletConnect() {
   return (
     <div>
       <Button
-        className="relative w-full flex items-center justify-center p-5 gap-4 bg-red-500 text-white"
+        className="relative w-full flex items-center justify-center p-5 gap-4 bg-purple-600 text-white"
         variant="outline"
         size="icon"
         onClick={connectWallet}
